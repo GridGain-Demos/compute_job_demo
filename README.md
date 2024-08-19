@@ -7,7 +7,7 @@ The first compute job launches a single Ignite Runnable instance
 via the IgniteCompute.run() method. This task tests to see if the  
 BUYER_TOTAL_SPEND table exists. If it does not yet exist then the  
 task creates the above table and populates 1 record for each buyer  
-1 through 6 and sets their total spend to 0.0. This task executes  
+1 through 1024 and sets their total spend to 0.0. This task executes  
 on any one host of a multi host cluster.  
 
 The second compute job launches an Ignite Runnable compute task on  
@@ -16,13 +16,13 @@ method. Each task executes a local query that reads the trade records
 for each buyer that reside on that host. Then each buyer's total spend  
 is calculated and subsequently updated into the BUYER_TOTAL_SPEND  
 table. This demonstrates the value of compute jobs by executing soley  
-against local data!  
+against local data on each host!  
 
 ## Environment
 This project have been built using Maven version 3.8.7  
 This code has been compiled using Java version 11.0.20  
 To build this project simply check out the project, navigate  
-into the project directory and execute "mvn package"  
+into the project directory and execute "mvn clean package"  
 
 ## Arguments
 The program supports either no arguments or  
