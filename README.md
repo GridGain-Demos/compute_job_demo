@@ -35,7 +35,7 @@ To build this project simply check out the project, navigate
 into the project directory and execute "mvn clean package"  
 
 ## GridGain Environment
-This program is written to execute against GridGain Ultimate Edition version 8.9.0  
+This program is written to execute against GridGain Ultimate Edition version 8.9.14  
 But higher versions of GridGain 8.x.x should also work!  
 
 ## Arguments
