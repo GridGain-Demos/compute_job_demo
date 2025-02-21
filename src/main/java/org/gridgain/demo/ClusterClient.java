@@ -3,8 +3,12 @@ package org.gridgain.demo;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.configuration.IgniteConfiguration;
+import org.apache.ignite.plugin.security.SecurityCredentials;
+import org.apache.ignite.plugin.security.SecurityCredentialsBasicProvider;
+import org.apache.ignite.spi.communication.tcp.TcpCommunicationSpi;
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
 import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
+import org.apache.ignite.ssl.SslContextFactory;
 import org.gridgain.control.agent.processor.deployment.ManagedDeploymentSpi;
 import org.gridgain.grid.configuration.GridGainConfiguration;
 
@@ -33,6 +37,22 @@ public class ClusterClient implements Closeable {
         gConfig.setRollingUpdatesEnabled(true);
         iConfig.setPluginConfigurations(gConfig);
         ignite = Ignition.start(iConfig);
+/**
+        System.setProperty("IGNITE_EVENT_DRIVEN_SERVICE_PROCESSOR_ENABLED", "true");
+        SecurityCredentials clientCredentials = new SecurityCredentials("cluster-user", "EZMoney1");
+        IgniteConfiguration cfg = new IgniteConfiguration()
+                .setClientMode(true)
+                .setDiscoverySpi(new TcpDiscoverySpi()
+                        .setIpFinder(new TcpDiscoveryVmIpFinder()
+                                .setAddresses(Collections.singleton("6cff83a2-72e3-40d6-8e6a-2ff1bc8c8f70.nebula-shared-us-east-1.nebula.gridgain.com:47500"))))
+                .setCommunicationSpi(new TcpCommunicationSpi()
+                        .setForceClientToServerConnections(true))
+                .setPluginConfigurations(new GridGainConfiguration()
+                        .setSecurityCredentialsProvider(new SecurityCredentialsBasicProvider(clientCredentials))
+                        .setRollingUpdatesEnabled(true))
+                .setSslContextFactory(new SslContextFactory());
+        ignite = Ignition.start(cfg);
+ **/
         ignite.log().debug("org.gridgain.demo.ClusterClient ignite client started");
         return ignite;
     }

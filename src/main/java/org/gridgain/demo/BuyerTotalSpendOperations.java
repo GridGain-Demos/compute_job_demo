@@ -6,7 +6,9 @@ import org.apache.ignite.IgniteCompute;
 public class BuyerTotalSpendOperations {
 
     private static final String HELP = new String("-help");
+    private static final String DELETE_MERGE = new String("-delete_merge");
     private static final String SCHEMA = new String("-create_schema");
+    private static final String TRADE_SCHEMA = new String("-create_trade_schema");
     private static final String EXEC_ONCE = new String("-exec_once");
 
     private ClusterClient clusterClient;
@@ -25,9 +27,15 @@ public class BuyerTotalSpendOperations {
                 if (SCHEMA.equals(args[0])) {
                     BuyerTotalSpendSchema schema = new BuyerTotalSpendSchema(ignite);
                     compute.run(schema);
+                } else if (TRADE_SCHEMA.equals(args[0])) {
+                    CreateTradeSchema createTradeSchema = new CreateTradeSchema(ignite);
+                    compute.run(createTradeSchema);
                 } else if (EXEC_ONCE.equals(args[0])) {
                     BuyerTotalSpendCalculation calc = new BuyerTotalSpendCalculation(ignite);
                     compute.broadcast(calc);
+                }  else if (DELETE_MERGE.equals(args[0])) {
+                    DeleteAndMerge deleteAndMerge = new DeleteAndMerge(ignite);
+                    compute.run(deleteAndMerge);
                 }
             }
         }
@@ -35,7 +43,7 @@ public class BuyerTotalSpendOperations {
 
     private static boolean isValidArgument(String argument) {
         boolean result = false;
-        if(HELP.equals(argument) || SCHEMA.equals(argument) || EXEC_ONCE.equals(argument)) {
+        if(HELP.equals(argument) || SCHEMA.equals(argument) || TRADE_SCHEMA.equals(argument)  || EXEC_ONCE.equals(argument) || DELETE_MERGE.equals(argument)) {
             result = true;
         }
         return result;
@@ -46,11 +54,13 @@ public class BuyerTotalSpendOperations {
         System.out.println("*******************************************************************************");
         System.out.println("Valid arguments are:");
         System.out.println("  -help which displays program usage");
+        System.out.println("  -create_trade_schema which creates and populates the TRADE table.");
         System.out.println("  -create_schema which creates and populates the BUYER_TOTAL_SPEND table.");
         System.out.println("  -exec_once which executes a broadcast for local calculation for all buyers.");
         System.out.println("*******************************************************************************");
         System.out.println("Example invocations follow");
         System.out.println("  java -cp buyer-total-spend-compute.jar org.gridgain.demo.BuyerTotalSpendOperations -help");
+        System.out.println("  java -cp buyer-total-spend-compute.jar org.gridgain.demo.BuyerTotalSpendOperations -create_trade_schema");
         System.out.println("  java -cp buyer-total-spend-compute.jar org.gridgain.demo.BuyerTotalSpendOperations -create_schema");
         System.out.println("  java -cp buyer-total-spend-compute.jar org.gridgain.demo.BuyerTotalSpendOperations -exec_once");
         System.out.println("*******************************************************************************");

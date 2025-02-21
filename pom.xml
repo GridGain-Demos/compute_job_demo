@@ -10,9 +10,9 @@
     <packaging>jar</packaging>
 
     <properties>
-        <gridgain.version>8.9.0</gridgain.version>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <gridgain.version>8.9.14</gridgain.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -60,6 +60,9 @@
                             <addClasspath>true</addClasspath>
                             <mainClass>org.gridgain.demo.BuyerTotalSpendOperations</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <Add-Opens>java.base/jdk.internal.misc=ALL-UNNAMED java.base/sun.nio.ch=ALL-UNNAMED java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED jdk.management/com.sun.management.internal=ALL-UNNAMED java.base/java.io=ALL-UNNAMED java.base/java.nio=ALL-UNNAMED java.base/java.util=ALL-UNNAMED java.base/java.util.concurrent=ALL-UNNAMED java.base/java.util.concurrent.locks=ALL-UNNAMED java.base/java.util.concurrent.atomic=ALL-UNNAMED java.base/java.lang=ALL-UNNAMED java.base/java.lang.invoke=ALL-UNNAMED java.base/java.math=ALL-UNNAMED java.sql/java.sql=ALL-UNNAMED java.base/java.net=ALL-UNNAMED java.base/java.security.cert=ALL-UNNAMED java.base/sun.security.x509=ALL-UNNAMED java.base/sun.security.ssl=ALL-UNNAMED</Add-Opens>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
